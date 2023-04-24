@@ -4,7 +4,7 @@ Desenvolvimento de um aplicativo de mídia social. Possui postagens, usuários, 
 # Ambiente de desenvolvimento
 
 ## IDE
-Visual Studio Code
+💮 Visual Studio Code
 
 ## Tecnologias 
 💮  Django
