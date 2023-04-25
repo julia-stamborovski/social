@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Post, LikePost
 
+# HOME
 @login_required(login_url= 'signin')
 def index(request):
     user_object = User.objects.get(username=request.user.username)
@@ -13,6 +14,7 @@ def index(request):
     posts = Post.objects.all()
     return render(request, "index.html", {'user_profile': user_profile, 'posts': posts})
 
+# UPLOAD OF POST
 
 def upload(request):
     
@@ -32,6 +34,7 @@ def upload(request):
     else:
         return redirect('/')
 
+# LIKES OF POST
 @login_required(login_url= 'signin')
 def like_post(request):
     username = request.user.username
@@ -55,6 +58,24 @@ def like_post(request):
         post.save()
         return redirect('/')
 
+# USER PROFILE
+@login_required(login_url= 'signin')
+def profile(request, pk):
+    
+    user_object = User.objects.get(username=pk)
+    user_profile = Profile.objects.get(user=user_object)
+    user_posts = Post.objects.filter(user=pk)
+    user_post_lenght = len(user_posts)
+    
+    context = {
+        'user_object': user_object,
+        'user_profile': user_profile,
+        'user_posts': user_posts,
+        'user_post_lenght': user_post_lenght,
+    }
+    return render(request, 'profile.html', context)
+
+# USER SETTINGS
 @login_required(login_url= 'signin')
 def settings(request):
     user_profile = Profile.objects.get(user=request.user)
@@ -83,6 +104,7 @@ def settings(request):
         return redirect('settings')
     return render(request, "setting.html", {'user_profile': user_profile})
 
+# REGISTER
 
 def signup(request):
     if request.method == "POST":
@@ -122,7 +144,7 @@ def signup(request):
     else:
         return render(request, "signup.html")
 
-
+# LOGIN
 def signin(request):
     
     if request.method == "POST":
@@ -140,6 +162,7 @@ def signin(request):
     else: 
         return render(request, "signin.html")
 
+# LOGOUT
 @login_required(login_url= 'signin')
 def logout(request):
 
