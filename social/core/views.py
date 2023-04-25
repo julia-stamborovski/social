@@ -30,7 +30,6 @@ def index(request):
     return render(request, "index.html", {'user_profile': user_profile, 'posts': feed_list})
 
 # UPLOAD OF POST
-
 def upload(request):
     
     if request.method == 'POST':
@@ -122,7 +121,6 @@ def follow(request):
             return redirect('/profile/'+user)
     else:
         return redirect('/')
-
 
 # USER SETTINGS
 @login_required(login_url= 'signin')
